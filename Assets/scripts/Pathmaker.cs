@@ -18,6 +18,11 @@ public class Pathmaker : MonoBehaviour {
 	public Transform pathmakerSpherePrefab;
 	public static int globalTileCount;
 	private int _randFloorCount;
+	public int randomSpawner;
+	public bool spawnOK;
+	public GameObject tile1;
+	public GameObject tile2;
+	public GameObject tile3;
 
 	private void Start()
 	{
@@ -42,29 +47,51 @@ else if (num > 0.25f && num < 0.5f)
 				transform.Rotate(0f,-90f,0f);
 			}
 
-else if(num>=0.98 && num <= 1.0f)
+else if(num>=0.90 && num <= 1.0f)
 			{
 				Instantiate(pathmakerSpherePrefab, transform.position, Quaternion.identity);
 			}
 
-			Instantiate(floorPrefab, transform.position, Quaternion.identity);
+switch (randomSpawner)
+{
+	case 1:
+		Instantiate(tile1, transform.position, Quaternion.identity);
+		break;
+                
+	case 2:
+		Instantiate(tile2, transform.position, Quaternion.identity);
+		break;
+                
+	case 3:
+		Instantiate(tile3, transform.position, Quaternion.identity);
+		break;      
+	case 4:
+		Instantiate(tile3, transform.position, Quaternion.identity);
+		break;      
+}
+			//Instantiate(floorPrefab, transform.position, Quaternion.identity);
 
 			transform.position += transform.forward * 5;
 			_floorCount++;
 			globalTileCount++;
+			Debug.Log(globalTileCount);
 		}
 else
 {
 //			Destroy my game object; 		// self destruct if I've made enough tiles already	
-Destroy(pathmakerSpherePrefab);
+Destroy(this.gameObject);
 }
 
 if (globalTileCount > 500)
 {
-	Destroy(pathmakerSpherePrefab);
-	
-	//THIS ISNT WORKING BECAUSE YOU NEED AN ARRAY
+	Debug.Log("ENOUGH.");
+	Destroy(this.gameObject);
+
 }
+
+randomSpawner = Random.Range(1, 4);
+
+
 //			
 	}
 
