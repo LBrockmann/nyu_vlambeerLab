@@ -27,6 +27,7 @@ public class Pathmaker : MonoBehaviour {
 	private void Start()
 	{
 		_randFloorCount = Random.Range(30, 60);
+		spawnOK = true;
 	}
 
 	void Update () {
@@ -52,33 +53,36 @@ else if(num>=0.90 && num <= 1.0f)
 				Instantiate(pathmakerSpherePrefab, transform.position, Quaternion.identity);
 			}
 
-switch (randomSpawner)
+if (spawnOK == true)
 {
-	case 1:
-		Instantiate(tile1, transform.position, Quaternion.identity);
-		break;
-                
-	case 2:
-		Instantiate(tile2, transform.position, Quaternion.identity);
-		break;
-                
-	case 3:
-		Instantiate(tile3, transform.position, Quaternion.identity);
-		break;      
-	case 4:
-		Instantiate(tile3, transform.position, Quaternion.identity);
-		break;      
-}
-			//Instantiate(floorPrefab, transform.position, Quaternion.identity);
+	randomSpawner = Random.Range(1, 4);
+	switch (randomSpawner)
+	{
+		case 1:
+			Instantiate(tile1, transform.position, Quaternion.identity);
+			break;
 
-			transform.position += transform.forward * 5;
-			_floorCount++;
-			globalTileCount++;
-			Debug.Log(globalTileCount);
+		case 2:
+			Instantiate(tile2, transform.position, Quaternion.identity);
+			break;
+
+		case 3:
+			Instantiate(tile3, transform.position, Quaternion.identity);
+			break;
+		case 4:
+			Instantiate(tile3, transform.position, Quaternion.identity);
+			break;
+	}
+
+	transform.position += transform.forward * 5;
+	_floorCount++;
+	globalTileCount++;
+	spawnOK = true;
+}
 		}
+
 else
-{
-//			Destroy my game object; 		// self destruct if I've made enough tiles already	
+{	
 Destroy(this.gameObject);
 }
 
@@ -86,15 +90,22 @@ if (globalTileCount > 500)
 {
 	Debug.Log("ENOUGH.");
 	Destroy(this.gameObject);
-
 }
-
-randomSpawner = Random.Range(1, 4);
-
-
-//			
+		
 	}
 
+	private void OnTriggerStay(Collider other)
+	{
+		if (other.tag == "Tile")
+		{
+			spawnOK = false;
+			Debug.Log("Trigger");
+		}
+		/*else
+		{
+			spawnOK = true;
+		}*/
+	}
 } // end of class scope
 
 // MORE STEPS BELOW!!!........
