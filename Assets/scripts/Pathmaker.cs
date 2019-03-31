@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 // MAZE PROC GEN LAB
 // all students: complete steps 1-6, as listed in this file
@@ -10,121 +9,115 @@ using UnityEngine.SceneManagement;
 // STEP 1: ======================================================================================
 // put this script on a Sphere... it will move around, and drop a path of floor tiles behind it
 
-public class Pathmaker : MonoBehaviour {
-
+public class Pathmaker : MonoBehaviour
+{
 // STEP 2: ============================================================================================
 
-	private int _floorCount = 0;
-	public Transform floorPrefab;
-	public Transform pathmakerSpherePrefab;
-	public static int globalTileCount;
-	private int _randFloorCount;
-	public int randomSpawner;
-	public bool spawnOK;
-	public GameObject tile1;
-	public GameObject tile2;
-	public GameObject tile3;
+    private int _floorCount = 0;
+    public Transform floorPrefab;
+    public Transform pathmakerSpherePrefab;
+    public static int globalTileCount;
+    private int _randFloorCount;
+    public int randomSpawner;
+    public bool spawnOK;
+    public GameObject tile1;
+    public GameObject tile2;
+    public GameObject tile3;
 
-	private void Start()
-	{
-		_randFloorCount = Random.Range(30, 60);
-		spawnOK = true;
-	}
+    private void Start()
+    {
+        _randFloorCount = Random.Range(30, 60);
+        spawnOK = true;
+    }
 
-	void Update () {
+    void Update()
+    {
+        
+        //		If counter is less than 50, then:
+        if (_floorCount < _randFloorCount)
+        {
+            float num = Random.value;
 
-if (Input.GetKeyDown(KeyCode.H)) //WHY IS THE DEBUG NOT PRINTING??
-		{
-			SceneManager.LoadScene("mainLabScene");
-			Debug.Log("Loading");
-		}
-			//		If counter is less than 50, then:
-if (_floorCount < _randFloorCount)
-		{
-			float num = Random.value;
+            if (num < 0.20f)
+            {
+                transform.Rotate(0f, 90f, 0f);
+            }
+            else if (num > 0.20f && num < 0.4f)
+            {
+                transform.Rotate(0f, -90f, 0f);
+            }
 
-if (num < 0.25f)
-			{
-				transform.Rotate(0f,90f,0f);
-			}
-else if (num > 0.25f && num < 0.5f)
-			{
-				transform.Rotate(0f,-90f,0f);
-			}
+            else if (num >= 0.90 && num <= 1.0f)
+            {
+                Instantiate(pathmakerSpherePrefab, transform.position, Quaternion.identity);
+            }
 
-else if(num>=0.90 && num <= 1.0f)
-			{
-				Instantiate(pathmakerSpherePrefab, transform.position, Quaternion.identity);
-			}
+            if (spawnOK == true)
+            {
+                randomSpawner = Random.Range(1, 7);
+                switch (randomSpawner)
+                {
+                    case 1:
+                        Instantiate(tile1, transform.position, Quaternion.Euler(-90, 0, 0));
+                        break;
 
-if (spawnOK == true)
-{
-	randomSpawner = Random.Range(1, 7);
-	switch (randomSpawner)
-	{
-		case 1:
-			Instantiate(tile1, transform.position, Quaternion.Euler(-90,0,0));
-			break;
-		
-		case 2:
-			Instantiate(tile1, transform.position, Quaternion.Euler(-90,0,0));
-			break;
-		case 3:
-			Instantiate(tile1, transform.position, Quaternion.Euler(-90,0,0));
-			break;
+                    case 2:
+                        Instantiate(tile1, transform.position, Quaternion.Euler(-90, 0, 0));
+                        break;
+                    case 3:
+                        Instantiate(tile1, transform.position, Quaternion.Euler(-90, 0, 0));
+                        break;
 
-		case 4:
-			Instantiate(tile2, transform.position, Quaternion.Euler(-90,0,0));
-			break;
+                    case 4:
+                        Instantiate(tile2, transform.position, Quaternion.Euler(-90, 0, 0));
+                        break;
 
-		case 5:
-			Instantiate(tile3, transform.position, Quaternion.Euler(-90,0,0));
-			break;
-		case 6:
-			Instantiate(tile3, transform.position, Quaternion.Euler(-90,0,0));
-			break;
-		case 7:
-			Instantiate(tile3, transform.position, Quaternion.Euler(-90,0,0));
-			break;
-	}
+                    case 5:
+                        Instantiate(tile3, transform.position, Quaternion.Euler(-90, 0, 0));
+                        break;
+                    case 6:
+                        Instantiate(tile3, transform.position, Quaternion.Euler(-90, 0, 0));
+                        break;
+                    case 7:
+                        Instantiate(tile3, transform.position, Quaternion.Euler(-90, 0, 0));
+                        break;
+                }
 
-	transform.position += transform.forward * 5;
-	_floorCount++;
-	globalTileCount++;
-	spawnOK = true;
-}
-		}
+                transform.position += transform.forward * 5;
+                _floorCount++;
+                globalTileCount++;
+                spawnOK = true;
+            }
+        }
 
-else
-{	
-Destroy(this.gameObject);
-}
+        else
+        {
+            Destroy(this.gameObject);
+        }
 
-if (globalTileCount > 500)
-{
-	Debug.Log("ENOUGH.");
-	Destroy(this.gameObject);
-}
-		
-	}
+        if (globalTileCount > 500)
+        {
+            Debug.Log("ENOUGH.");
+            Destroy(this.gameObject);
+        }
+    }
 
-	private void OnTriggerStay(Collider other)
-	{
-		if (other.tag == "Tile")
-		{
-			spawnOK = false;
-			Debug.Log("Trigger");
-		}
-		/*else
-		{
-			spawnOK = true;
-		}*/
-	}
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.tag == "Tile")
+        {
+            spawnOK = false;
+            Debug.Log("Trigger");
+        }
+
+        /*else
+        {
+            spawnOK = true;
+        }*/
+    }
 } // end of class scope
 
 // MORE STEPS BELOW!!!........
-
-
 
 
 // STEP 3: =====================================================================================
@@ -138,7 +131,6 @@ if (globalTileCount > 500)
 //	- (hint: declare a "public static int" and have each Pathmaker check this "globalTileCount", somewhere in your code? if there are already enough tiles, then maybe the Pathmaker could Destroy my game object
 
 
-
 // STEP 4: ======================================================================================
 // tune your values...
 
@@ -147,13 +139,11 @@ if (globalTileCount > 500)
 // c. tweak all the probabilities that you want... what % chance is there for a pathmaker to make a pathmaker? is that too high or too low?
 
 
-
 // STEP 5: ===================================================================================
 // maybe randomize it even more?
 
 // - randomize 2 more variables in Pathmaker.cs for each different Pathmaker... you would do this in Start()
 // - maybe randomize each pathmaker's lifetime? maybe randomize the probability it will turn right? etc. if there's any number in your code, you can randomize it if you move it into a variable
-
 
 
 // STEP 6:  =====================================================================================
@@ -165,7 +155,6 @@ if (globalTileCount > 500)
 //		- MODEL 3 DIFFERENT TILES IN MAYA! DON'T STOP USING MAYA OR YOU'LL FORGET IT ALL
 //		- add a simple in-game restart button; let us press [R] to reload the scene and see a new level generation
 // - with Text UI, name your proc generation system ("AwesomeGen", "RobertGen", etc.) and display Text UI that tells us we can press [R]
-
 
 
 // OPTIONAL EXTRA TASKS TO DO, IF YOU WANT: ===================================================
