@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 // MAZE PROC GEN LAB
 // all students: complete steps 1-6, as listed in this file
@@ -31,10 +32,13 @@ public class Pathmaker : MonoBehaviour {
 	}
 
 	void Update () {
-		
-		
-		
-//		If counter is less than 50, then:
+
+if (Input.GetKeyDown(KeyCode.H)) //WHY IS THE DEBUG NOT PRINTING??
+		{
+			SceneManager.LoadScene("mainLabScene");
+			Debug.Log("Loading");
+		}
+			//		If counter is less than 50, then:
 if (_floorCount < _randFloorCount)
 		{
 			float num = Random.value;
@@ -55,21 +59,31 @@ else if(num>=0.90 && num <= 1.0f)
 
 if (spawnOK == true)
 {
-	randomSpawner = Random.Range(1, 4);
+	randomSpawner = Random.Range(1, 7);
 	switch (randomSpawner)
 	{
 		case 1:
 			Instantiate(tile1, transform.position, Quaternion.Euler(-90,0,0));
 			break;
-
+		
 		case 2:
+			Instantiate(tile1, transform.position, Quaternion.Euler(-90,0,0));
+			break;
+		case 3:
+			Instantiate(tile1, transform.position, Quaternion.Euler(-90,0,0));
+			break;
+
+		case 4:
 			Instantiate(tile2, transform.position, Quaternion.Euler(-90,0,0));
 			break;
 
-		case 3:
+		case 5:
 			Instantiate(tile3, transform.position, Quaternion.Euler(-90,0,0));
 			break;
-		case 4:
+		case 6:
+			Instantiate(tile3, transform.position, Quaternion.Euler(-90,0,0));
+			break;
+		case 7:
 			Instantiate(tile3, transform.position, Quaternion.Euler(-90,0,0));
 			break;
 	}
