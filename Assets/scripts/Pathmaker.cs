@@ -59,18 +59,18 @@ if (spawnOK == true)
 	switch (randomSpawner)
 	{
 		case 1:
-			Instantiate(tile1, transform.position, Quaternion.identity);
+			Instantiate(tile1, transform.position, Quaternion.Euler(-90,0,0));
 			break;
 
 		case 2:
-			Instantiate(tile2, transform.position, Quaternion.identity);
+			Instantiate(tile2, transform.position, Quaternion.Euler(-90,0,0));
 			break;
 
 		case 3:
-			Instantiate(tile3, transform.position, Quaternion.identity);
+			Instantiate(tile3, transform.position, Quaternion.Euler(-90,0,0));
 			break;
 		case 4:
-			Instantiate(tile3, transform.position, Quaternion.identity);
+			Instantiate(tile3, transform.position, Quaternion.Euler(-90,0,0));
 			break;
 	}
 
