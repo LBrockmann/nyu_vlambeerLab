@@ -23,7 +23,9 @@ public class Pathmaker : MonoBehaviour
     public GameObject tile1;
     public GameObject tile2;
     public GameObject tile3;
-
+    private Vector3 _positionSum, _positionAverage;
+    private int _instantCount;
+    public GameObject Camera;
     private void Start()
     {
         _randFloorCount = Random.Range(30, 60);
@@ -55,38 +57,45 @@ public class Pathmaker : MonoBehaviour
             if (spawnOK == true)
             {
                 randomSpawner = Random.Range(1, 7);
+                GameObject tileInstance;
                 switch (randomSpawner)
                 {
                     case 1:
-                        Instantiate(tile1, transform.position, Quaternion.Euler(-90, 0, 0));
+                        tileInstance = Instantiate(tile1, transform.position, Quaternion.Euler(-90, 0, 0));
                         break;
 
                     case 2:
-                        Instantiate(tile1, transform.position, Quaternion.Euler(-90, 0, 0));
+                        tileInstance =  Instantiate(tile1, transform.position, Quaternion.Euler(-90, 0, 0));
                         break;
                     case 3:
-                        Instantiate(tile1, transform.position, Quaternion.Euler(-90, 0, 0));
+                        tileInstance = Instantiate(tile1, transform.position, Quaternion.Euler(-90, 0, 0));
                         break;
 
                     case 4:
-                        Instantiate(tile2, transform.position, Quaternion.Euler(-90, 0, 0));
+                        tileInstance = Instantiate(tile2, transform.position, Quaternion.Euler(-90, 0, 0));
                         break;
 
                     case 5:
-                        Instantiate(tile3, transform.position, Quaternion.Euler(-90, 0, 0));
+                        tileInstance = Instantiate(tile3, transform.position, Quaternion.Euler(-90, 0, 0));
                         break;
                     case 6:
-                        Instantiate(tile3, transform.position, Quaternion.Euler(-90, 0, 0));
+                        tileInstance = Instantiate(tile3, transform.position, Quaternion.Euler(-90, 0, 0));
                         break;
                     case 7:
-                        Instantiate(tile3, transform.position, Quaternion.Euler(-90, 0, 0));
+                        tileInstance = Instantiate(tile3, transform.position, Quaternion.Euler(-90, 0, 0));
                         break;
                 }
-
+                
+                //average position += tileinstance.position
+                //camera position = averageposition / i (where i is the number of times tileInstance has been instantiated)
+                _instantCount++;
+                _positionSum += this.transform.position;
                 transform.position += transform.forward * 5;
                 _floorCount++;
                 globalTileCount++;
                 spawnOK = true;
+                _positionAverage = _positionSum / _instantCount;
+                Camera.transform.position = _positionAverage;    Camera.transform.position += Vector3.up * 50f;
             }
         }
 
@@ -102,7 +111,7 @@ public class Pathmaker : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay(Collider other)
+    /*private void OnTriggerStay(Collider other)
     {
         if (other.tag == "Tile")
         {
@@ -115,7 +124,7 @@ public class Pathmaker : MonoBehaviour
             spawnOK = true;
         }*/
     }
-} // end of class scope
+ // end of class scope
 
 // MORE STEPS BELOW!!!........
 
